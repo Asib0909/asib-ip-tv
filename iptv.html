@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ASIB IPTV </title>
+    <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 10px;
+        }
+        h1 {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        #player {
+            width: 100%;
+            max-width: 640px;
+            height: 360px;
+            margin: 20px auto;
+            background: #111;
+            border: 2px solid #ff0000;
+        }
+        .search-box {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        .channel-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 3px solid transparent;
+        }
+        .channel-card:hover {
+            border-color: #00ffcc;
+            box-shadow: 0 0 15px #00ffcc;
+        }
+        .channel-card img {
+            width: 100%;
+            height: 60px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ASIB IPTV</h1>
+
+    <div id="player"></div>
+
+    <input type="text" id="search" class="search-box" placeholder="Search Channel..." onkeyup="filterChannels()">
+
+    <div class="grid-container" id="channel-list">
+        
+        <div class="channel-card" onclick="playVideo('http://103.99.249.139/sonymax/index.m3u8')">
+            <img src="https://the-media-ant.mo.cloudinary.net/medias/5806fd6df297cb205707b491/1565806898893/088780e2037d8abf862871b20b6a037f.jpg?tx=w_350" alt="sonymax">
+        </div>
+
+        <div class="channel-card" onclick="playVideo('http://103.99.249.139/starjalsha/index.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Star_Jalsha_logo_2023.png/250px-Star_Jalsha_logo_2023.png" alt="Star Jalsha">
+        </div>
+        <div class="channel-card" onclick="playVideo('http://103.253.18.58/')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Star_Jalsha_logo_2023.png/250px-Star_Jalsha_logo_2023.png" alt="Star Jalsha">
+        </div>
+
+    <script>
+        // ডিফল্টভাবে প্রথম চ্যানেলটি চালু করার জন্য
+        var player = new Clappr.Player({
+            source: "https://bpatlive.bttb.gov.bd/hls/btv_ctg.m3u8",
+            parentId: "#player",
+            width: "100%",
+            height: "100%",
+            autoPlay: true
+        });
+
+        // কোনো চ্যানেলে ক্লিক করলে নতুন লিংক প্লে করার ফাংশন
+        function playVideo(url) {
+            player.load(url);
+            player.play();
+        }
+
+        // সার্চ বার দিয়ে চ্যানেল ফিল্টার করার জাভাস্ক্রিপ্ট (C প্রোগ্রামিং এর লজিকের মতো)
+        function filterChannels() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let cards = document.getElementsByClassName('channel-card');
+            
+            for (let i = 0; i < cards.length; i++) {
+                let imgAlt = cards[i].getElementsByTagName('img')[0].alt.toLowerCase();
+                if (imgAlt.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
